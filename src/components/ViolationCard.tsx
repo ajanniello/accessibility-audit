@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import type { Violation } from "@/types/audit";
-import { ChevronDown, ExternalLink, AlertOctagon, AlertTriangle, AlertCircle, Info } from "lucide-react";
+import { ChevronDown, ExternalLink, AlertOctagon, AlertTriangle, AlertCircle, Info, Users, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getExplainer } from "@/lib/violationExplainers";
 
 const IMPACT_CONFIG = {
   critical: {
@@ -55,6 +56,7 @@ export default function ViolationCard({ violation }: { violation: Violation }) {
   const Icon = config.icon;
   const wcagCriteria = extractWcagCriteria(violation.tags);
   const headingId = `violation-${violation.id}`;
+  const explainer = getExplainer(violation.id);
 
   return (
     <article
@@ -136,10 +138,49 @@ export default function ViolationCard({ violation }: { violation: Violation }) {
       {expanded && (
         <div
           id={`${headingId}-body`}
-          className="border-t border-[var(--card-border)] px-5 pb-5"
+          className="border-t border-[var(--card-border)] px-5 pb-5 space-y-5"
         >
+          {/* Plain-language explainer */}
+          <div className="mt-5 rounded-xl bg-[var(--background)] border border-[var(--card-border)] p-4 space-y-3">
+            <p className="text-sm text-[var(--foreground)] leading-relaxed">
+              {explainer.plainSummary}
+            </p>
+
+            <div className="flex items-start gap-2">
+              <Users
+                size={14}
+                className="shrink-0 mt-0.5 text-[var(--accent)]"
+                aria-hidden="true"
+              />
+              <div>
+                <p className="text-xs font-semibold text-[var(--foreground)] mb-0.5">
+                  Who is affected
+                </p>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">
+                  {explainer.whoIsAffected}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-2">
+              <Lightbulb
+                size={14}
+                className="shrink-0 mt-0.5 text-amber-500"
+                aria-hidden="true"
+              />
+              <div>
+                <p className="text-xs font-semibold text-[var(--foreground)] mb-0.5">
+                  Real-world impact
+                </p>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">
+                  {explainer.realWorldImpact}
+                </p>
+              </div>
+            </div>
+          </div>
+
           {/* How to fix */}
-          <div className="mt-4">
+          <div>
             <h4 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-2">
               How to fix
             </h4>
@@ -162,7 +203,7 @@ export default function ViolationCard({ violation }: { violation: Violation }) {
 
           {/* Affected elements */}
           {violation.nodes.length > 0 && (
-            <div className="mt-4">
+            <div>
               <h4 className="text-xs font-semibold text-[var(--muted)] uppercase tracking-wide mb-2">
                 Affected elements ({violation.nodes.length})
               </h4>
