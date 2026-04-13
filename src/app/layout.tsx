@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "AccessiScan — Web Accessibility Auditor",
   description:
     "Instantly audit any website for WCAG 2.1 accessibility issues — color contrast, alt text, keyboard navigation, ARIA, and more.",
+  icons: {
+    icon: "/accessibility-icon.jpg",
+  },
   openGraph: {
     title: "AccessiScan — Web Accessibility Auditor",
     description:
