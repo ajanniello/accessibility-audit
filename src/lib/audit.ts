@@ -6,7 +6,10 @@ import type { AuditResult, Violation, PassedCheck, IncompleteCheck } from "@/typ
 const axeCorePath = path.join(process.cwd(), "node_modules", "axe-core", "axe.js");
 
 export async function runAudit(url: string): Promise<AuditResult> {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
+  });
 
   try {
     const context = await browser.newContext({

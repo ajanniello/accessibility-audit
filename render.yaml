@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: accessiscan
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npx playwright install --with-deps chromium && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /opt/render/project/.playwright-browsers
