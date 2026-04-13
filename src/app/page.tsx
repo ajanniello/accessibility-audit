@@ -1,5 +1,26 @@
 import UrlInputForm from "@/components/UrlInputForm";
-import { ShieldCheck, Eye, Keyboard, Contrast } from "lucide-react";
+import { ShieldCheck, Eye, Keyboard, Contrast, Globe, Users, Scale } from "lucide-react";
+
+const WHY_ITEMS = [
+  {
+    icon: Users,
+    stat: "1 in 6",
+    heading: "People have a disability",
+    body: "Over 1 billion people worldwide live with some form of disability — visual, motor, cognitive, or auditory. Inaccessible websites shut them out entirely.",
+  },
+  {
+    icon: Scale,
+    stat: "97.4%",
+    heading: "Of top websites fail WCAG",
+    body: "The WebAIM Million study found that 97.4% of the top 1 million homepages have detectable WCAG failures — accessibility is still largely ignored.",
+  },
+  {
+    icon: Globe,
+    stat: "$13T",
+    heading: "In disposable income",
+    body: "People with disabilities and their families control an estimated $13 trillion in annual disposable income. Inaccessible sites are leaving that on the table.",
+  },
+];
 
 const FEATURES = [
   {
@@ -122,6 +143,43 @@ export default function HomePage() {
                 <p className="text-xs text-[var(--muted)] leading-relaxed">
                   {description}
                 </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Why this matters */}
+      <section
+        className="border-t border-[var(--card-border)] px-6 py-16"
+        aria-labelledby="why-heading"
+      >
+        <div className="max-w-4xl mx-auto">
+          <h2
+            id="why-heading"
+            className="text-center text-sm font-semibold text-[var(--muted)] uppercase tracking-widest mb-3"
+          >
+            Why this matters
+          </h2>
+          <p className="text-center text-[var(--muted)] text-sm max-w-xl mx-auto mb-10 leading-relaxed">
+            Web accessibility isn&apos;t just a compliance checkbox — it&apos;s about making sure everyone can use what you build.
+          </p>
+
+          <ul className="grid grid-cols-1 sm:grid-cols-3 gap-6" role="list">
+            {WHY_ITEMS.map(({ icon: Icon, stat, heading, body }) => (
+              <li
+                key={heading}
+                className="flex flex-col gap-3 rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-6 text-center"
+              >
+                <div
+                  className="flex items-center justify-center w-10 h-10 rounded-xl bg-[var(--accent)]/10 mx-auto"
+                  aria-hidden="true"
+                >
+                  <Icon size={20} className="text-[var(--accent)]" />
+                </div>
+                <p className="text-3xl font-black text-[var(--foreground)]">{stat}</p>
+                <h3 className="text-sm font-semibold text-[var(--foreground)]">{heading}</h3>
+                <p className="text-xs text-[var(--muted)] leading-relaxed">{body}</p>
               </li>
             ))}
           </ul>
