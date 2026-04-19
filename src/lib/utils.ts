@@ -8,7 +8,11 @@ export function cn(...inputs: ClassValue[]) {
 export function isValidUrl(str: string): boolean {
   try {
     const url = new URL(str);
-    return url.protocol === "http:" || url.protocol === "https:";
+    return (
+      (url.protocol === "http:" || url.protocol === "https:") &&
+      url.hostname.includes(".") &&
+      url.hostname.length > 3
+    );
   } catch {
     return false;
   }
